@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.att_android_mariane_mello.network.JokeApi
 import com.example.att_android_mariane_mello.network.ViaCepApi
 import com.example.att_android_mariane_mello.ui.theme.Att_Android_mariane_melloTheme
 import kotlinx.coroutines.launch
@@ -90,6 +91,7 @@ fun CepScreen(modifier: Modifier = Modifier) {
                     carregando = true
                     resultado = try {
                         val endereco = ViaCepApi.service.buscarCep(cep)
+                        val piada = JokeApi.service.buscarPiada()
                         if (endereco.erro != null) {
                             "CEP não encontrado."
                         } else {
@@ -97,7 +99,9 @@ fun CepScreen(modifier: Modifier = Modifier) {
                                 "Estado: ${endereco.estado} (${endereco.uf})\n" +
                                 "Bairro: ${endereco.bairro}\n" +
                                 "Rua: ${endereco.logradouro}\n" +
-                                "DDD: ${endereco.ddd}"
+                                "DDD: ${endereco.ddd}\n" +
+
+                            "Piada: ${piada.texto}"
                         }
                     } catch (e: Exception) {
                         "Erro ao buscar o CEP."
